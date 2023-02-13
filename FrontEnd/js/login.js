@@ -6,7 +6,7 @@ const form = document.getElementById('login_form');
 //écouter le bouton sumbit sur le formulaire de connexion
 form.addEventListener('submit', event => {
     //empêcher le rechargement de la page
-  event.preventDefault();
+    event.preventDefault();
   
   //On récupère la valeur des champs dans le formulaire
   const email = document.getElementById('email').value;
@@ -22,13 +22,12 @@ form.addEventListener('submit', event => {
   .then(response => response.json())
   .then(data => {
     //redirection vers l'index.html
-    //document.location.href="index.html";
-    const token = data;
-    console.log(data.token);
+    let token = data;
+    sessionStorage.setItem('token', token.token);
+    document.location.href="index.html";
   })
   .catch(error => {
     console.error(error);
-   con
+  
   });
 });
-

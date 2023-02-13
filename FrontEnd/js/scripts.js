@@ -1,3 +1,14 @@
+ //On recupere le token de session
+  let token = sessionStorage.getItem("token");
+
+  if (token && token !== "undefined") {
+    console.log("sucessfully");
+    console.log(token);
+  }else{
+    console.log("Unsuccessful");
+    console.log(token);
+  }
+ 
  //crée les bouton des catégories
  function boutonsCategories(){
   
