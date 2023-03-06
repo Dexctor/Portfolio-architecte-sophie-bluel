@@ -1,4 +1,5 @@
-//vérifier les valeurs envoyer
+// on supprime les localStorage 
+sessionStorage.clear();
 
 //Sélectionner le formulaire dans le html
 const form = document.getElementById('login_form');
@@ -21,13 +22,21 @@ form.addEventListener('submit', event => {
   })
   .then(response => response.json())
   .then(data => {
-    //redirection vers l'index.html
-    let token = data;
-    sessionStorage.setItem('token', token.token);
-    document.location.href="index.html";
+    //récuperer 
+    let userId = data.userId;
+    if (userId == 1){
+      let token = data;
+      sessionStorage.setItem('token', token.token);
+      //redirection vers l'index.html
+      document.location.href="index.html";
+    }else{
+      let errorMsg = document.getElementById('error-message');
+      errorMsg.textContent="Identifiant ou mot de passe incorrect !";
+    }
+  //
   })
   .catch(error => {
     console.error(error);
-  
+   
   });
 });

@@ -96,6 +96,7 @@ nav li {
 }
 li>a{
 	text-decoration: none;
+	color: black;
 }
 
 li:hover {
@@ -267,4 +268,145 @@ footer nav ul {
 	width: 210px;
 	text-align: center;
 	border-radius: 60px;
+}
+
+/*Messages d'erreur d'authentification */
+#error-message:empty{
+	display: none;
+	transition-duration: 1s;
+}
+#error-message{
+	color: red;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 2rem;
+    padding: 10px;
+	transition-duration: 1s;
+}
+
+/*barre édition - publier */
+
+.container-edition{
+	height: 40px;
+	background-color: black;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: none;
+}
+.container-edition.active{
+	display: flex;
+}
+
+/* Modale d'édition */
+
+.modal-btn{
+	border: none;
+	font-size: 18px;
+	margin:  auto;
+	display: none;
+	min-width: 150px;
+	cursor: pointer;
+	background-color: #fff;
+}
+.modal-btn.active{
+	display: block;
+}
+
+.modal-container{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.modal-container.active{
+	display: block;
+}
+
+.overlay{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	max-width: none;
+}
+
+.modal{
+	width: 98%;
+	max-width: 500px;
+	padding: 30px;
+	min-width: 300px;
+	background: #fff;
+	position: absolute;
+	top: 10%;
+	left: 35%;
+	height: 650px;
+}
+
+.close-modal{
+	padding: 8px 10px;
+	border-radius:5px;
+	font-size: 13px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	color: black;
+	border: none;
+	background: #fff;
+}
+
+.modal h1{
+	font-family: inherit;
+	text-align: center;
+	color: black;
+	margin-bottom: 2rem;
+}
+
+/*contenu de la modal*/
+
+.container-modal {
+	height: 70%;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	padding: 20px;
+}
+
+.titre-modal{
+	width: 100%;
+}
+.modal-header{
+	margin: 0px auto;
+}
+#figure-modal{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+}
+#figure-modal>img{
+	margin: 5px;
+	grid-column: auto / span 1;
+}
+#figcaptionModal{
+	position: relative;
+	left: 6px;
+}
+.modal-footer{
+	text-align: center;
+	height: 20%;
+}
+.bouton-ajouter{
+	margin-top: 2rem;
+	background: #1D6154;
+	border: 1px green solid;
+	border-radius: 20px;
+	padding: 10px;
+	color: #fff;
+	padding-left: 35px;
+	padding-right: 35px;
+	font-size: 15px;
 }
