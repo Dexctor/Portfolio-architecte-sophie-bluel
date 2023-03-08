@@ -287,18 +287,44 @@ footer nav ul {
 
 /*barre édition - publier */
 
-.container-edition{
-	height: 40px;
+.container-edition {
+	display: flex;
+	align-items: center;
+	height: 60px;
 	background-color: black;
 	color: #fff;
-	display: flex;
 	justify-content: center;
-	align-items: center;
-	display: none;
-}
-.container-edition.active{
+  }
+  
+  .text {
 	display: flex;
-}
+	align-items: center;
+	font-size: 1rem;
+	font-family: 'Work Sans';
+  }
+  #bold{
+	background-color: #fff;
+	color: black;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 20px;
+	border: 1px white solid;
+	font-family: 'Work Sans';
+  }
+  #thin{
+	margin-right: 10px;
+	font-size: 14px;
+  }
+  
+  .text p:first-child {
+	margin-right: 10px;
+  }
+  
+  .text i {
+	margin-right: 5px;
+  }
+
 
 /* Modale d'édition */
 
@@ -307,7 +333,6 @@ footer nav ul {
 	font-size: 18px;
 	margin:  auto;
 	display: none;
-	min-width: 150px;
 	cursor: pointer;
 	background-color: #fff;
 }
@@ -344,7 +369,10 @@ footer nav ul {
 	position: absolute;
 	top: 10%;
 	left: 35%;
-	height: 650px;
+	height: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .close-modal{
@@ -360,6 +388,11 @@ footer nav ul {
 	background: #fff;
 }
 
+.arrow{
+	display: none;
+	cursor: pointer;
+}
+
 .modal h1{
 	font-family: inherit;
 	text-align: center;
@@ -370,10 +403,11 @@ footer nav ul {
 /*contenu de la modal*/
 
 .container-modal {
-	height: 70%;
+	height: auto;
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	padding: 20px;
+	margin-top: -95px;
 }
 
 .titre-modal{
@@ -381,6 +415,7 @@ footer nav ul {
 }
 .modal-header{
 	margin: 0px auto;
+	
 }
 #figure-modal{
 	display: flex;
@@ -391,16 +426,32 @@ footer nav ul {
 	margin: 5px;
 	grid-column: auto / span 1;
 }
+
+.icon{
+	position: absolute;
+	background-color: black;
+	padding: 3px;
+	border-radius: 5px;
+	color: #fff;
+	margin-left: 60px;
+	margin-top: 5px;
+}
+
 #figcaptionModal{
 	position: relative;
 	left: 6px;
 }
 .modal-footer{
-	text-align: center;
+	border-top: 1px solid #B3B3B3;
 	height: 20%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	margin-left: 30px;
+	margin-right: 30px;
 }
 .bouton-ajouter{
-	margin-top: 2rem;
+	margin-top: 1rem;
 	background: #1D6154;
 	border: 1px green solid;
 	border-radius: 20px;
@@ -408,5 +459,51 @@ footer nav ul {
 	color: #fff;
 	padding-left: 35px;
 	padding-right: 35px;
+	margin-left: 25%;
+	margin-right: 25%;
 	font-size: 15px;
+	cursor: pointer;
+}
+
+.bouton-supprimer{
+	background-color: #fff;
+	border: none;
+	color: #f40707;
+	margin-left: 25%;
+	margin-right: 25%;
+	font-size: 15px;
+}
+
+/*Formulaire Modal */
+#modal-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+#label-titre{
+
+}
+#titre{
+	width: 81%;
+	background: white;
+	border: none;
+	box-shadow: black;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+	padding: 15px;
+}
+
+#categories-select{
+	width: 87%;
+	background: white;
+	border: none;
+	box-shadow: black;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+	padding: 15px;
+  }
+
+form > input{
+	
 }
