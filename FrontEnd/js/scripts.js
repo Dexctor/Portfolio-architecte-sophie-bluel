@@ -112,14 +112,20 @@
          const form = document.createElement('form');
          form.setAttribute("id", "modal-form");
          
-         //inputFile 
+         //inputFile & icon
          const inputFormFile = document.createElement('input');
+         inputFormFile.innerText="+ Ajouter photo";
+         const iconPicture = document.createElement('i');
+         iconPicture.classList.add('fa-sharp','fa-solid','fa-image','picture','fa-xl');
+
          inputFormFile.setAttribute('type', 'file');
          inputFormFile.setAttribute('id', 'image');
          inputFormFile.setAttribute('accept', 'image/png');
         
          //label titre
          const labelTitre = document.createElement('label');
+         const divTitre = document.createElement('div');
+         divTitre.classList.add('input-titre');
          labelTitre.innerText = "Titre";
          labelTitre.setAttribute('for', 'titre');
          labelTitre.setAttribute('id', 'label-titre');
@@ -157,14 +163,33 @@
          arrowModal.style.display = 'block';
          modalContainer.innerHTML = "";
          
-         //ajouter les éléments au DOM
-         modalContainer.appendChild(form);
-         form.appendChild(inputFormFile);
-         form.appendChild(labelTitre);
-         form.appendChild(inputTitre);
-         form.appendChild(labelCategories);
-         form.appendChild(selectTag)
-         selectTag.appendChild(optionCategories);
+        //création des divs pour contenir les éléments du formulaire
+        const divInputFile = document.createElement('div');
+        divInputFile .classList.add('input-file')
+
+        const divInputs = document.createElement('div');
+        divInputs.classList.add('form-group');
+
+        // Créer un élément label pour le champ d'entrée de fichier
+        const labelImage = document.createElement('label');
+        labelImage.setAttribute('for', 'image');
+        labelImage.innerText = '+ Ajouter photo';
+
+        // Ajouter le champ d'entrée de fichier et l'étiquette au DOM
+        
+        //ajouter les éléments au DOM
+        modalContainer.appendChild(form);
+        form.appendChild(divInputFile);
+        divInputFile.appendChild(iconPicture);
+        form.appendChild(divInputs);
+        divInputFile.appendChild(inputFormFile);
+        divInputFile.appendChild(labelImage);
+        divInputFile.appendChild(inputFormFile);
+        divInputs.appendChild(divTitre);
+        divInputs.appendChild(labelCategories);
+        divInputs.appendChild(selectTag);
+        divTitre.appendChild(labelTitre);
+        divTitre.appendChild(inputTitre);
 
 
          //ajouter les catégorie dynamiquement 
