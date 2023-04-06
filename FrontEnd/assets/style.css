@@ -437,9 +437,23 @@ footer nav ul {
   margin: auto;
   display: none;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #fff0;
+}
+.btn1{
+  position: relative;
+  right: -175px;
+  top: 29px;
 }
 
+.btn2{
+  
+}
+
+.btn3{
+  position: relative;
+  top: -40px;
+  right: 238px;
+}
 .modal-btn.active {
   display: block;
 }
