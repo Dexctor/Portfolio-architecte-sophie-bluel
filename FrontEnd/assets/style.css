@@ -446,7 +446,9 @@ footer nav ul {
 }
 
 .btn2{
-  
+  position: relative;
+  top: 15px;
+  left: -180px;
 }
 
 .btn3{
@@ -488,7 +490,6 @@ footer nav ul {
   position: absolute;
   top: 10%;
   left: 35%;
-  height: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -532,7 +533,7 @@ footer nav ul {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding: 20px;
-  margin-top: -95px;
+  margin-top: -45px;
 }
 
 .titre-modal {
