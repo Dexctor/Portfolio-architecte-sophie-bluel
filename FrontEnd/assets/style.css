@@ -345,6 +345,7 @@ footer nav ul {
 #login_form label {
   margin: 2em 0 1em 0;
   font-weight: 700;
+  color: #838383;
 }
 
 #login_form textarea {
@@ -355,7 +356,7 @@ footer nav ul {
 #pswd_forgot > a {
   text-align: center;
   display: block;
-  color: black;
+  color: #8d8d8d;
   margin-bottom: 10rem;
   font-size: 14px;
   font-weight: 600;
@@ -703,6 +704,7 @@ color: #444444;
   padding: 15px;
   position: relative;
   top: 10px;
+  margin-bottom: 2rem;
 }
 
 .container-preview {
