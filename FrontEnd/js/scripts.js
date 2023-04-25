@@ -1,3 +1,4 @@
+"use strict";
 // Import des fonctions utilitaires
 import {
     creatModal,
@@ -19,16 +20,11 @@ import {
        // Modifie le bouton de connexion en bouton de deconnexion
        document.getElementById("login").innerHTML = "logout";
  
-       // Initialise les boutons de la fenêtre modale
-       initializeBoutonsModal();
+       
  
       //Crée le conteneur de la fenêtre modale
        const modalContainer = document.createElement('div');
        creatModal(modalContainer);
- 
-        //Récupère et affiche les travaux (images)
-        recupererTravail()
-            .then(images => afficherImages(images))
 
         //Crée et initialise les boutons de catégories
        
@@ -43,18 +39,7 @@ import {
  
  boutonsCategories();
 //Crée le bouton pour la fenêtre modal
- function createModalButton(target, buttonText) {
-    const button = document.createElement('button');
-    button.classList.add('modal-btn', 'modal-trigger');
-    button.dataset.target = target;
- 
-    const icon = document.createElement('i');
-    icon.classList.add('far', 'fa-thin', 'fa-pen-to-square');
-    button.appendChild(icon);
-    button.appendChild(document.createTextNode(buttonText));
- 
-    return button;
- }
+
  
 //Vide le sessionStorage et redirige l'utilisateur vers la page de connexion
 function clearSessionStorage() {
@@ -112,40 +97,7 @@ function boutonsCategories() {
 }
  
 //Initialise et affiche les boutons "modifier" pour la fenêtre modal
-function initializeBoutonsModal() {
-    const figure2 = document.querySelector('#introduction figure');
-    const portfolio2 = document.querySelector('.tittle-button-wrapper');
-    const article2 = document.querySelector('article');
-    const modalButton1 = createModalButton('#modal-2', ' modifier');
-    const modalButton2 = createModalButton('#modal-1', ' modifier');
-    const modalButton3 = createModalButton('#modal-3', ' modifier');
-    modalButton1.classList.add('btn2');
-    modalButton2.classList.add('btn1');
-    modalButton3.classList.add('btn3');
- 
-    figure2.appendChild(modalButton1);
-    portfolio2.prepend(modalButton2);
-    article2.prepend(modalButton3);
- 
-    const modalBtns = document.querySelectorAll('.modal-btn');
-    const modalContainers = document.querySelectorAll(".modal-container");
-    const closeModal = document.querySelector('.close-modal');
-    const overLays = document.querySelectorAll('.overlay');
- 
-    modalBtns.forEach(modalBtn => modalBtn.classList.toggle("active"));
- 
-    modalButton2.addEventListener("click", (event) => {
-       event.preventDefault();
-       const modalId = event.target.getAttribute("data-target");
-       modalButton1.style.zIndex = "-1";
-       modalButton2.style.zIndex = "-1";
-       modalButton3.style.zIndex = "-1";
-       const modalContainer = document.querySelector(modalId);
-       modalContainer.classList.toggle("active");
-       console.log(modalId);
-    });
- }
- 
+
 //Crée et affiche le conteneur d'édition 
 function createContainerEdition() {
     const containerEdition = createAndAppendElement(document.body, 'div', ['container-edition'], '', 'afterbegin');

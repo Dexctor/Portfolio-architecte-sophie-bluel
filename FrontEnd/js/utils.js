@@ -1,7 +1,7 @@
 "use strict";
 //crée une modal pour la galerie de photos et gère les événements associés
 export function creatModal() {
-
+   initializeBoutonsModal();
 	const figure = document.querySelector('#introduction figure');
 
       const modalContainer = createAndAppendElement(figure, 'div', ['modal-container'], '', 'afterbegin');
@@ -16,7 +16,7 @@ export function creatModal() {
       const containerModal = createAndAppendElement(modal, 'div', ['modal-content']);
 
       recupererTravail()
-         .then(données => afficherImagesModal(données));
+         .then(donnees => afficherImagesModal(donnees));
 
       const footer = createAndAppendElement(modal, 'footer', ['modal-footer']);
       const boutonsAjouter = createAndAppendElement(footer, 'button', ['bouton-ajouter'], 'Ajouter une photo');
@@ -68,7 +68,7 @@ export function creatModal() {
       const modalContainer = document.querySelector('.modal-content');
       modalContainer.style.display = "grid";
       recupererTravail()
-            .then(données => afficherImagesModal(données));
+            .then(donnees => afficherImagesModal(donnees));
       });
 
       const boutonSupprimer = document.createElement('button');
@@ -107,13 +107,15 @@ export function supprimerToutlesTravaux() {
    // Récupère la liste de tous les éléments
    fetch('http://localhost:5678/api/works', {
      headers: {
-       Authorization: 'Bearer ' + sessionStorage.getItem("token")
+       Authorization: 'Bearer ' + sessionStorage.getItem("token") // Ajoute le token d'authentification
      }
    })
    .then(response => {
+     // Vérifie si la réponse renvoie une erreur
      if (!response.ok) {
        throw new Error('Erreur ' + response.status + ': ' + response.statusText);
      }
+     // Si la réponse est OK, récupère les données JSON
      return response.json();
    })
    .then(data => {
@@ -122,10 +124,11 @@ export function supprimerToutlesTravaux() {
        fetch('http://localhost:5678/api/works/' + item.id, {
          method: 'DELETE',
          headers: {
-           Authorization: 'Bearer ' + sessionStorage.getItem("token")
+           Authorization: 'Bearer ' + sessionStorage.getItem("token") // Ajoute le token d'authentification
          }
        })
        .then(response => {
+         // Vérifie si la réponse renvoie une erreur
          if (!response.ok) {
            throw new Error('Erreur ' + response.status + ': ' + response.statusText);
          }
@@ -145,7 +148,6 @@ export function supprimerToutlesTravaux() {
      console.error(error);
    });
  }
-
 //crée et ajoute un élément avec des classes, un texte et une position spécifiés, puis l'ajoute au parent
 export function createAndAppendElement(parent, elementType, classList = [], textContent = '', position = 'beforeend') {
 	const element = document.createElement(elementType);
@@ -281,7 +283,6 @@ export function creatForm(modalContainer) {
 	modalContainer.innerHTML = '';
 	const form = document.createElement('form');
 	form.setAttribute('id', 'modal-form');
-	form.setAttribute('enctype', 'multipart/form-data');
 
 
 	//inputFile & icon
@@ -391,7 +392,7 @@ export function creatForm(modalContainer) {
 		})
 		.catch((error) => console.error(error));
 }
-async function ajouterTravail() {
+export  function ajouterTravail() {
    
 		const imageInput = document.getElementById('image');
 		const imageUrl = imageInput.files[0];
@@ -410,17 +411,18 @@ async function ajouterTravail() {
 		data.append('category', categoryId);
 
 		const apiUrl = 'http://localhost:5678/api/works';
-		const response = await fetch(apiUrl, {
+		const response =  fetch(apiUrl, {
 			method: 'POST',
+         body: data,
 			headers: {
 				'Authorization': `Bearer ${token}`
 
 			},
-			body: data
 		});
 
 		if (response.ok) {
-			alert('Les données ont été envoyées avec succès');
+			afficherImages();
+         afficherImagesModal();
 		}
 		else {
 			alert('Erreur lors de l\'envoi des données');
@@ -444,7 +446,6 @@ export function createInputFormFile() {
 	input.setAttribute('type', 'file');
 	input.setAttribute('id', 'image');
 	input.setAttribute('accept', 'image/png');
-	input.setAttribute('required', '');
 	return input;
 }
 
@@ -519,7 +520,8 @@ export function createImagePreview() {
 //crée un bouton pour ajouter une photo et gère l'événement associé
 export function createBoutonAjouterPhoto(modalFormDiv, inputFormFile) {
 	const boutonAjouterPhoto = createButtonWithClassAndText('bouton-ajouter-photo', '+ Ajouter photo');
-	boutonAjouterPhoto.addEventListener('click', () => {
+	boutonAjouterPhoto.addEventListener('click', (e) => {
+      e.preventDefault();
 		inputFormFile.click();
 		const inputFiles = document.getElementsByClassName('input-file');
 		for (let i = 0; i < inputFiles.length; i++) {
@@ -534,4 +536,51 @@ export function createBoutonAjouterPhoto(modalFormDiv, inputFormFile) {
 		span.style.display = 'none';
 	});
 	return boutonAjouterPhoto;
+}
+
+export function initializeBoutonsModal() {
+   const figure2 = document.querySelector('#introduction figure');
+   const portfolio2 = document.querySelector('.tittle-button-wrapper');
+   const article2 = document.querySelector('article');
+   const modalButton1 = createModalButton('#modal-2', ' modifier');
+   const modalButton2 = createModalButton('#modal-1', ' modifier');
+   const modalButton3 = createModalButton('#modal-3', ' modifier');
+   modalButton1.classList.add('btn2');
+   modalButton2.classList.add('btn1');
+   modalButton3.classList.add('btn3');
+
+   figure2.appendChild(modalButton1);
+   portfolio2.prepend(modalButton2);
+   article2.prepend(modalButton3);
+
+   const modalBtns = document.querySelectorAll('.modal-btn');
+   const modalContainers = document.querySelectorAll(".modal-container");
+   const closeModal = document.querySelector('.close-modal');
+   const overLays = document.querySelectorAll('.overlay');
+
+   modalBtns.forEach(modalBtn => modalBtn.classList.toggle("active"));
+
+   modalButton2.addEventListener("click", (event) => {
+      event.preventDefault();
+      const modalId = event.target.getAttribute("data-target");
+      modalButton1.style.zIndex = "-1";
+      modalButton2.style.zIndex = "-1";
+      modalButton3.style.zIndex = "-1";
+      const modalContainer = document.querySelector(modalId);
+      modalContainer.classList.toggle("active");
+      console.log(modalId);
+   });
+}
+
+export function createModalButton(target, buttonText) {
+   const button = document.createElement('button');
+   button.classList.add('modal-btn', 'modal-trigger');
+   button.dataset.target = target;
+
+   const icon = document.createElement('i');
+   icon.classList.add('far', 'fa-thin', 'fa-pen-to-square');
+   button.appendChild(icon);
+   button.appendChild(document.createTextNode(buttonText));
+
+   return button;
 }
