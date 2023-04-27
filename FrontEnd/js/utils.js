@@ -35,6 +35,8 @@ export function creatModal() {
       if (form) {
          form.reset();
       }
+      recupererTravail()
+      .then(donnees => afficherImages(donnees));
       });
 
       boutonsAjouter.addEventListener("click", function() {
@@ -167,7 +169,7 @@ export function recupererTravail() {
 //affiche les images dans la galerie à partir des données fournies
 export function afficherImages(images) {
 	const conteneurImages = document.querySelector('.gallery');
-
+  conteneurImages.innerHTML="";
 	images.forEach(element => {
 		const figure = document.createElement('figure');
 		const img = document.createElement('img');
@@ -265,10 +267,12 @@ export function afficherImagesModal(images) {
      .then(function (response) {
        console.log(response);
        if (response.ok) {
-         // Affiche les projets mis à jour dans la modale
-         afficherImagesModal();
-         // Affiche les projets mis à jour sur la page d'accueil
-         afficherImages();
+         
+      // Affiche les projets mis à jour dans la modale
+       
+      // Affiche les projets mis à jour sur la page d'accueil
+         recupererTravail()
+           .then(donnees => afficherImagesModal(donnees));
        } else {
          console.error('Erreur lors de la suppression de l\'élément');
        }
@@ -411,22 +415,27 @@ export  function ajouterTravail() {
 		data.append('category', categoryId);
 
 		const apiUrl = 'http://localhost:5678/api/works';
-		const response =  fetch(apiUrl, {
-			method: 'POST',
-         body: data,
-			headers: {
-				'Authorization': `Bearer ${token}`
+const response =  fetch(apiUrl, {
+  method: 'POST',
+  
+  headers: {
+    'Authorization': `Bearer ${token}`
+  },
+  body: data,
+});
 
-			},
-		});
-
-		if (response.ok) {
-			afficherImages();
-         afficherImagesModal();
-		}
-		else {
-			alert('Erreur lors de l\'envoi des données');
-		}
+response.then((res) => {
+  if (res.ok) {
+    recupererTravail()
+      .then(images => afficherImages(images));
+    recupererTravail()
+      .then(donnees => afficherImagesModal(donnees));
+  } else {
+    throw new Error('Error status code: ' + res.status);
+  }
+}).catch((error) => {
+  console.log(error);
+});
 	
 
 }
@@ -446,6 +455,7 @@ export function createInputFormFile() {
 	input.setAttribute('type', 'file');
 	input.setAttribute('id', 'image');
 	input.setAttribute('accept', 'image/png');
+  input.setAttribute('crossorigin', 'anonymous');
 	return input;
 }
 
