@@ -344,15 +344,18 @@ export function creatForm(modalContainer) {
         const titreInput = document.getElementById("titre");
         const categorieSelect = document.getElementById("categories-select");
     
-        if (!fileInput.value || !titreInput.value || !categorieSelect.value) {
+        if (!fileInput.value) {
             event.preventDefault();
-            alert("Veuillez remplir tous les champs obligatoires.");
-        } else if (categorieSelect.value < 1) {
+            alert("Veuillez sélectionner un fichier.");
+          } else if (!titreInput.value) {
             event.preventDefault();
-            alert("Veuillez sélectionner une catégorie valide.");
-        } else {
+            alert("Veuillez entrer un titre pour votre fichier.");
+          } else if (categorieSelect.value < 1) {
+            event.preventDefault();
+            alert("Veuillez sélectionner une catégorie pour votre fichier.");
+          }else{
             ajouterTravail();
-        }
+          }
     });
 
     //ajouter les éléments au DOM
