@@ -62,8 +62,8 @@ export function creatModal() {
         heading.textContent = 'Galerie-photo';
         const boutonValider = document.querySelector('.bouton-ajouter');
         boutonValider.textContent = "Ajouter une photo";
-        boutonValider.style.background = "#1D6154";
-        boutonValider.style.border = "1px solid green";
+        boutonValider.style.background = "#b3b3b3;";
+        boutonValider.style.border = "1px solid #b3b3b3;";
         const boutonSupprimer = document.querySelector('.bouton-supprimer');
         boutonSupprimer.style.display = "block";
         const modalContainer = document.querySelector('.modal-content');
@@ -291,11 +291,12 @@ export function creatForm(modalContainer) {
     //inputFile & icon
     const iconPicture = createIcon(['fa-sharp', 'fa-solid', 'fa-image', 'picture', 'fa-xl']);
     const inputFormFile = createInputFormFile();
-
+    inputFormFile.setAttribute('name', 'file');
     //label titre
     const labelTitre = createLabel('Titre', 'titre', 'label-titre');
     const divTitre = createDivWithClass('input-titre');
     const inputTitre = createInput('text', 'titre', 'titre');
+    inputTitre.setAttribute('required', 'true');
 
     //label catégorie
     const labelCategories = createLabel('Catégorie', 'categories', 'categories');
@@ -333,11 +334,25 @@ export function creatForm(modalContainer) {
             console.log('nope');
         }
 
-        boutonValider.addEventListener('click', async () => {
-          
-            ajouterTravail();
-        });
 
+    });
+
+    
+
+    boutonValider.addEventListener('click', async (event) => {
+        const fileInput = document.getElementById("image"); 
+        const titreInput = document.getElementById("titre");
+        const categorieSelect = document.getElementById("categories-select");
+    
+        if (!fileInput.value || !titreInput.value || !categorieSelect.value) {
+            event.preventDefault();
+            alert("Veuillez remplir tous les champs obligatoires.");
+        } else if (categorieSelect.value < 1) {
+            event.preventDefault();
+            alert("Veuillez sélectionner une catégorie valide.");
+        } else {
+            ajouterTravail();
+        }
     });
 
     //ajouter les éléments au DOM
@@ -374,26 +389,34 @@ export function creatForm(modalContainer) {
         }
     });
 
-    //ajouter les catégorie dynamiquement
     const categorySelect = document.querySelector('select');
-    fetch('http://localhost:5678/api/categories')
-        .then((response) => response.json())
-        .then((categories) => {
-            categories.forEach((category) => {
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.text = category.name;
-                categorySelect.appendChild(option);
-                const mySelect = document.getElementById('categories-select');
-                const options = mySelect.querySelectorAll('option');
-                options.forEach((option) => {
-                    if (option.textContent.trim() === '') {
-                        option.hidden = true;
-                    }
-                });
+fetch('http://localhost:5678/api/categories')
+    .then((response) => response.json())
+    .then((categories) => {
+        // Créer une nouvelle option pour "Choisir une catégorie"
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Choisir une catégorie';
+        defaultOption.value ='0';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        categorySelect.appendChild(defaultOption);
+
+        // Ajouter les options pour chaque catégorie
+        categories.forEach((category) => {
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.text = category.name;
+            categorySelect.appendChild(option);
+            const mySelect = document.getElementById('categories-select');
+            const options = mySelect.querySelectorAll('option');
+            options.forEach((option) => {
+                if (option.textContent.trim() === '') {
+                    option.hidden = true;
+                }
             });
-        })
-        .catch((error) => console.error(error));
+        });
+    })
+    .catch((error) => console.error(error));
 }
 
 //envoie un travail sur l'API avec fetch
